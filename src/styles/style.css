@@ -79,3 +79,8 @@
     width: 80%;
     max-width: 500px;
 }
+
+.modal_img {
+    width: 250px;
+    border-radius: 8px;
+}

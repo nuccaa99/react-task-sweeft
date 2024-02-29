@@ -6,7 +6,6 @@ function Modal({ children, onClose }) {
         <div className='modal_container' onClick={onClose}>
             <div className='modal'
                 onClick={e => {
-                    // do not close modal if inside modal content is clicked
                     e.stopPropagation();
                 }}>
                 {children}

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
 
 import "./styles/reset.css";
 import "./styles/style.css";
@@ -7,43 +6,40 @@ import "./styles/style.css";
 
 import ImageList from './components/ImageList';
 import SearchBar from "./components/SearchBar";
-
-
+import API from "./API";
 
 function App() {
-  const initalTerm = "most popular";
-  const [term, setTerm] = useState(initalTerm);
+  const initialState = "most popular";
+  const [term, setTerm] = useState(initialState);
   const [imageList, setImageList] = useState([]);
-
-
-
-
-  const API_KEY = process.env.REACT_APP_API_KEY;
-  const API_URL = 'https://api.unsplash.com/search/photos';
-  const IMAGES_PER_PAGE = 20;
-
 
   const fetchImages = async () => {
     try {
-      const { data } = await axios.get(
-        `${API_URL}?query=${term.length > 0 ? term : initalTerm}&page=1&per_page=${IMAGES_PER_PAGE}&client_id=${API_KEY}`
-      );
+      const data = await API.fetchImages(term);
       setImageList(data.results)
-      if (term) { localStorage.setItem(`${term}`, JSON.stringify(data.results)); }
+      if (term) {
+        localStorage.setItem(`${term}`, JSON.stringify(data.results));
+      }
     } catch (error) {
       console.log(error);
     }
   };
 
-
   useEffect(() => {
-    const cachedData = localStorage.getItem(`${term}`);
-    if (cachedData) {
-      setImageList(JSON.parse(cachedData));
-
+    if (term.length === 0) {
+      setImageList(JSON.parse(localStorage.getItem(initialState)));
     } else {
-      fetchImages()
+      const cachedData = localStorage.getItem(`${term}`);
+      if (cachedData) {
+        // console.log("local")
+        setImageList(JSON.parse(cachedData));
+
+      } else {
+        // console.log("api")
+        fetchImages()
+      }
     }
+
   }, [term]);
 
 
