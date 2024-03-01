@@ -6,7 +6,7 @@ function ImageList({ imageList }) {
         <div className="images_list_container">
             {imageList.map((img) => {
                 return (
-                    <Image img={img} key={img.id}/>
+                    <Image img={img} key={img.id} />
                 )
             })}
         </div>

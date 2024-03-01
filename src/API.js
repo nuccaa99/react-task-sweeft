@@ -13,7 +13,7 @@ const apiSettings = {
 
 
     fetchImgStats: async (imgId) => {
-        const endpoint = `${API_URL_IMG}?${imgId}/statistics&client_id=${API_KEY}`
+        const endpoint = `${API_URL_IMG}/${imgId}/statistics?client_id=${API_KEY}`
         return await (await fetch(endpoint)).json();
 
     }
