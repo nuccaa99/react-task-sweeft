@@ -18,7 +18,10 @@ function App() {
       const data = await API.fetchImages(term);
       setImageList(data.results)
       if (term) {
-        localStorage.setItem(`${term}`, JSON.stringify(data.results));
+        const existingStorage = JSON.parse(localStorage.getItem("imagesData")) || [];
+        const newSearchResult = { id: term, data: data.results }
+        const updatedStorage = [...existingStorage, newSearchResult]
+        localStorage.setItem("imagesData", JSON.stringify(updatedStorage));
       }
     } catch (error) {
       console.log(error);
@@ -29,13 +32,14 @@ function App() {
     if (term.length === 0) {
       setTerm(initialState)
     } else {
-      const cachedData = localStorage.getItem(`${term}`);
+      const existingStorage = JSON.parse(localStorage.getItem("imagesData")) || [];
+      const cachedData = existingStorage.find((item) => item.id === term)?.data;
       if (cachedData) {
-        // console.log("local")
-        setImageList(JSON.parse(cachedData));
+        console.log("local")
+        setImageList(cachedData);
 
       } else {
-        // console.log("api")
+        console.log("api")
         fetchImages()
       }
     }
