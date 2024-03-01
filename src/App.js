@@ -27,7 +27,7 @@ function App() {
 
   useEffect(() => {
     if (term.length === 0) {
-      setImageList(JSON.parse(localStorage.getItem(initialState)));
+      setTerm(initialState)
     } else {
       const cachedData = localStorage.getItem(`${term}`);
       if (cachedData) {
