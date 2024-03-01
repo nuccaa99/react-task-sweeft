@@ -35,11 +35,11 @@ function App() {
       const existingStorage = JSON.parse(localStorage.getItem("imagesData")) || [];
       const cachedData = existingStorage.find((item) => item.id === term)?.data;
       if (cachedData) {
-        console.log("local")
+        // console.log("local")
         setImageList(cachedData);
 
       } else {
-        console.log("api")
+        // console.log("api")
         fetchImages()
       }
     }

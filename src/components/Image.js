@@ -17,18 +17,29 @@ function Image({ img }) {
     const fetchImgStats = async () => {
         try {
             const data = await API.fetchImgStats(currentImgId);
-            console.log(data)
-            setCurrentImageData(data)
+            setCurrentImageData(data);
+
+            const existingStorage = JSON.parse(localStorage.getItem("imagesStatsData")) || [];
+            const newResult = { id: img.id, data: data }
+            const updatedStorage = [...existingStorage, newResult]
+            localStorage.setItem("imagesStatsData", JSON.stringify(updatedStorage));
+
         } catch (error) {
             console.log(error);
         }
     };
 
     useEffect(() => {
-        if (currentImgId) {
+        const existingStorage = JSON.parse(localStorage.getItem("imagesStatsData")) || [];
+        const cachedData = existingStorage.find((item) => item.id === currentImgId)?.data;
+        if (cachedData) {
+            setCurrentImageData(cachedData)
+        } else if (currentImgId) {
             fetchImgStats()
+
         }
     }, [currentImgId]);
+
 
     const handleClick = (id) => {
         setCurrentImgId(id);
