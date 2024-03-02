@@ -4,7 +4,7 @@ import SearchBar from "../components/SearchBar"
 
 function Home({ imageList, setTerm }) {
     return (
-        <div className="container">
+        <div className="home_container">
             <SearchBar setTerm={setTerm} />
             <ImageList imageList={imageList} />
         </div>

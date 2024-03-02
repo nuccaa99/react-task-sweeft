@@ -8,10 +8,12 @@ function Navbar() {
                 <img className="navbar_logo" src={cameraLenses} alt="camera__lenses_logo"></img>
             </Link>
             <div className="navbar_links_wrapper">
-                <Link to="/"  className="navbar_link">
+                <Link to="/" className="navbar_link">
                     Home
                 </Link>
-                <p className="navbar_link">History</p>
+                <Link to="/history" className="navbar_link">
+                    History
+                </Link>
             </div>
         </div>
     )

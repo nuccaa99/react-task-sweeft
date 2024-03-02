@@ -6,6 +6,7 @@ import "./styles/style.css";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 //components
 import Home from './pages/Home';
+import History from './pages/History';
 import Navbar from './components/Navbar';
 import API from "./API";
 
@@ -53,6 +54,7 @@ function App() {
       <Navbar />
       <Routes>
         <Route path='/' element={<Home setTerm={setTerm} imageList={imageList} />} />
+        <Route path='/history' element={<History />} />
       </Routes>
     </Router >
 
