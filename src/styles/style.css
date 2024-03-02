@@ -123,3 +123,40 @@
 .modal_icon {
     color: var(--main-color-dark);
 }
+
+
+/* navbar */
+
+.navbar_logo {
+    width: 30px;
+}
+
+.navbar_container {
+    background-color: var(--main-color);
+    display: flex;
+    align-items: center;
+    padding-inline: 70px;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0, 0, 0, .3);
+
+}
+
+
+.navbar_links_wrapper {
+    display: flex;
+    column-gap: 50px;
+
+}
+
+.navbar_link {
+    font-family: var(--font);
+    font-size: 16px;
+    padding-block: 20px;
+    border-bottom: 1px solid transparent;
+
+}
+
+.navbar_link:hover {
+    border-bottom: 1px solid var(--main-color-dark);
+    transition: border-bottom .5s ease-in-out;
+}

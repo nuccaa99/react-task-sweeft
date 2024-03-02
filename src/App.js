@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
-
+//styles
 import "./styles/reset.css";
 import "./styles/style.css";
-
-
-import ImageList from './components/ImageList';
-import SearchBar from "./components/SearchBar";
+//routing
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+//components
+import Home from './pages/Home';
+import Navbar from './components/Navbar';
 import API from "./API";
 
 function App() {
@@ -48,10 +49,13 @@ function App() {
 
 
   return (
-    <div className="container">
-      <SearchBar setTerm={setTerm} />
-      <ImageList imageList={imageList} />
-    </div>
+    <Router>
+      <Navbar />
+      <Routes>
+        <Route path='/' element={<Home setTerm={setTerm} imageList={imageList} />} />
+      </Routes>
+    </Router >
+
   );
 }
 
