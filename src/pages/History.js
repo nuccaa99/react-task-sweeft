@@ -24,16 +24,18 @@ function History() {
         <div className="history_container">
             <div className="history_scroll">
                 {searchHistory.map((item) => {
-                    return (
-                        <div
-                            className="history_scroll_item"
-                            key={item.id}
-                            onClick={() => handleClick(item.id)}>
-                            {item.data.length ?
-                                <div>{item.id}</div> : null}
-
-                        </div>
-                    )
+                    if (item.data.length) {
+                        return (
+                            <div
+                                className="history_scroll_item"
+                                key={item.id}
+                                onClick={() => handleClick(item.id)}>
+                                {item.id}
+                            </div>
+                        )
+                    } else {
+                        return null;
+                    }
                 })}
             </div>
             <ImageList imageList={currentImages} />
