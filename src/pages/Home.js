@@ -8,16 +8,18 @@ import API from "../API";
 
 function Home() {
     //to render initial homepage with 20 popular pics 
-    const popularTerm = "most popular"
+    const popularTerm = "most popular";
     const [term, setTerm] = useState("");
     const [imageList, setImageList] = useState([]);
 
+    const [page, setPage] = useState(1);
 
     //fetches images while user types in searchterm
     const fetchImages = async () => {
         try {
             const data = await API.fetchImages(term);
-            setImageList(data.results)
+            setImageList(data.results);
+            setPage(prevState => prevState + 1)
             if (term) {
                 const existingStorage = JSON.parse(localStorage.getItem("imagesData")) || [];
                 const newSearchResult = { id: term, data: data.results }
@@ -30,7 +32,6 @@ function Home() {
     };
 
 
-
     useEffect(() => {
         if (term.length === 0) {
             const popular = JSON.parse(localStorage.getItem("popularImages")) || [];
@@ -39,11 +40,9 @@ function Home() {
             const existingStorage = JSON.parse(localStorage.getItem("imagesData")) || [];
             const cachedData = existingStorage.find((item) => item.id === term)?.data;
             if (cachedData) {
-                // console.log("local")
                 setImageList(cachedData);
 
             } else {
-                // console.log("api")
                 fetchImages()
             }
         }
@@ -63,9 +62,9 @@ function Home() {
     };
 
     useEffect(() => {
-        fetchPopular()
-    }, []);
+        fetchPopular();
 
+    }, []);
 
 
     return (

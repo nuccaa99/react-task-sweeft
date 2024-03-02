@@ -7,7 +7,7 @@ const IMAGES_PER_PAGE = 20;
 const apiSettings = {
     fetchImages: async (term) => {
         const endpoint =
-            `${API_URL_SEARCH}?query=${term}&page=1&per_page=${IMAGES_PER_PAGE}&client_id=${API_KEY}`
+            `${API_URL_SEARCH}?query=${term}&page=1&client_id=${API_KEY}`
         return await (await fetch(endpoint)).json();
     },
 

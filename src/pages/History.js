@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import ImageList from "../components/ImageList";
 
 function History() {
-
     const searchHistory = JSON.parse(localStorage.getItem("imagesData")) || [];
     const [currentImages, setCurrentImages] = useState([]);
 
