@@ -12,18 +12,34 @@ function Home() {
     const [term, setTerm] = useState("");
     const [imageList, setImageList] = useState([]);
 
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(1)
+    const [isLoading, setIsLoading] = useState(false);
+
+
 
     //fetches images while user types in searchterm
-    const fetchImages = async () => {
+    const fetchImages = async (term, page) => {
+
         try {
-            const data = await API.fetchImages(term);
-            setImageList(data.results);
-            setPage(prevState => prevState + 1)
+            const data = await API.fetchImages(term, page);
+            setImageList(prevItems => [...prevItems, ...data.results]);
+
             if (term) {
                 const existingStorage = JSON.parse(localStorage.getItem("imagesData")) || [];
-                const newSearchResult = { id: term, data: data.results }
-                const updatedStorage = [...existingStorage, newSearchResult]
+                const existingTermObj = existingStorage.find((item) => item.id === term);
+                let updatedStorage;
+                if (existingTermObj) {
+                    const updatedObject = { ...existingTermObj };
+                    updatedObject.data = [...existingTermObj.data, ...data.results];
+                    updatedStorage = existingStorage.map(item =>
+                        item.id === term ? updatedObject : item
+                    );
+
+                } else {
+                    const newSearchResult = { id: term, data: data.results }
+                    updatedStorage = [...existingStorage, newSearchResult]
+
+                }
                 localStorage.setItem("imagesData", JSON.stringify(updatedStorage));
             }
         } catch (error) {
@@ -43,7 +59,8 @@ function Home() {
                 setImageList(cachedData);
 
             } else {
-                fetchImages()
+                setImageList([]);
+                fetchImages(term, 1)
             }
         }
 
@@ -63,8 +80,28 @@ function Home() {
 
     useEffect(() => {
         fetchPopular();
-
     }, []);
+
+
+    useEffect(() => {
+        if (!isLoading) return;
+        fetchImages(term, page);
+        setIsLoading(false);
+    }, [isLoading, term, page]);
+
+    //infinite scroll
+    const handleScroll = () => {
+        const { scrollTop, clientHeight, scrollHeight } = document.documentElement;
+        if (scrollTop + clientHeight >= scrollHeight - 20) {
+            setIsLoading(true)
+            setPage(prev => prev + 1)
+        }
+    };
+
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, [isLoading]);
 
 
     return (
