@@ -16,15 +16,18 @@ function Home() {
     const [page, setPage] = useState(1)
     //for infinite scroll
     const [isLoading, setIsLoading] = useState(false);
-    //for spinner
+    const [error, setError] = useState(false)
+
     const [dataIsLoading, setDataIsLoading] = useState(false);
-    
+
+
 
 
 
     //fetches images while user types in searchterm
     const fetchImages = async (term, page) => {
         try {
+            setError(false);
             setDataIsLoading(true);
 
             const data = await API.fetchImages(term, page);
@@ -49,7 +52,7 @@ function Home() {
                 localStorage.setItem("imagesData", JSON.stringify(updatedStorage));
             }
         } catch (error) {
-            console.log(error);
+            setError(true);
         } finally {
             setDataIsLoading(false);
         }
@@ -116,7 +119,7 @@ function Home() {
 
         <div className="home_container">
             <SearchBar setTerm={setTerm} />
-            <ImageList imageList={imageList} dataIsLoading={dataIsLoading} />
+            <ImageList imageList={imageList} dataIsLoading={dataIsLoading} error={error} />
         </div>
     )
 }

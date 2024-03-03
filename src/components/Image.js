@@ -9,13 +9,13 @@ import Spinner from "./Spinner";
 import API from "../API"
 
 
-
-
 function Image({ img }) {
 
     const [modalShown, toggleModal] = useState(false);
     const [currentImgData, setCurrentImageData] = useState();
     const [currentImgId, setCurrentImgId] = useState();
+
+    //for spinner
     const [imgIsLoading, setImgIsLoading] = useState(false)
 
     const fetchImgStats = async () => {

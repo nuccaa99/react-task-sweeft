@@ -5,7 +5,10 @@ function History() {
     const searchHistory = JSON.parse(localStorage.getItem("imagesData")) || [];
     const [currentImages, setCurrentImages] = useState([]);
 
-    let activeInitialState = searchHistory[0].id;
+    let activeInitialState;
+    if (searchHistory.length) {
+        activeInitialState = searchHistory[0].id;
+    }
     const [active, setActive] = useState(activeInitialState)
 
 
