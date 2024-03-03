@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
 import ImageList from "../components/ImageList";
-import SearchBar from "../components/SearchBar"
+import SearchBar from "../components/SearchBar";
+
 
 import API from "../API";
 
@@ -13,14 +14,19 @@ function Home() {
     const [imageList, setImageList] = useState([]);
 
     const [page, setPage] = useState(1)
+    //for infinite scroll
     const [isLoading, setIsLoading] = useState(false);
+    //for spinner
+    const [dataIsLoading, setDataIsLoading] = useState(false);
+    
 
 
 
     //fetches images while user types in searchterm
     const fetchImages = async (term, page) => {
-
         try {
+            setDataIsLoading(true);
+
             const data = await API.fetchImages(term, page);
             setImageList(prevItems => [...prevItems, ...data.results]);
 
@@ -44,6 +50,8 @@ function Home() {
             }
         } catch (error) {
             console.log(error);
+        } finally {
+            setDataIsLoading(false);
         }
     };
 
@@ -105,9 +113,10 @@ function Home() {
 
 
     return (
+
         <div className="home_container">
             <SearchBar setTerm={setTerm} />
-            <ImageList imageList={imageList} />
+            <ImageList imageList={imageList} dataIsLoading={dataIsLoading} />
         </div>
     )
 }

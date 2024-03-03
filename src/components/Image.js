@@ -5,7 +5,10 @@ import { faDownload, faEye, faHeart } from '@fortawesome/free-solid-svg-icons';
 
 
 import Modal from "./Modal";
+import Spinner from "./Spinner";
 import API from "../API"
+
+
 
 
 function Image({ img }) {
@@ -13,9 +16,11 @@ function Image({ img }) {
     const [modalShown, toggleModal] = useState(false);
     const [currentImgData, setCurrentImageData] = useState();
     const [currentImgId, setCurrentImgId] = useState();
+    const [imgIsLoading, setImgIsLoading] = useState(false)
 
     const fetchImgStats = async () => {
         try {
+            setImgIsLoading(true)
             const data = await API.fetchImgStats(currentImgId);
             setCurrentImageData(data);
 
@@ -27,6 +32,7 @@ function Image({ img }) {
         } catch (error) {
             console.log(error);
         }
+        setImgIsLoading(false)
     };
 
     useEffect(() => {
@@ -52,6 +58,7 @@ function Image({ img }) {
             {modalShown && (
                 <Modal onClose={() => toggleModal(false)} shown={modalShown}>
                     <img src={img.urls.full} alt="modal" className="modal_img" />
+                    {imgIsLoading && <Spinner />}
                     <section className="modal_img_stats_container">
                         <div className="modal_img_stats_wrapper">
                             <FontAwesomeIcon icon={faDownload} className="modal_icon" />

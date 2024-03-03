@@ -23,6 +23,7 @@ function SearchBar({ setTerm }) {
         <div className="search_input_wrapper">
             <input type="text"
                 name="search"
+                value={state}
                 className="search_input"
                 placeholder='Search Images'
                 onChange={(e) => { setState(e.target.value) }} />

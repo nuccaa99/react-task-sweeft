@@ -5,6 +5,9 @@ function History() {
     const searchHistory = JSON.parse(localStorage.getItem("imagesData")) || [];
     const [currentImages, setCurrentImages] = useState([]);
 
+    let activeInitialState = searchHistory[0].id;
+    const [active, setActive] = useState(activeInitialState)
+
 
     //when the history page is mounted the result of the first search is displayed (if available) 
     useEffect(() => {
@@ -18,6 +21,7 @@ function History() {
 
     const handleClick = (id) => {
         setCurrentImages(searchHistory.find((item) => item.id === id).data)
+        setActive(id)
     }
 
     return (
@@ -28,7 +32,7 @@ function History() {
                     if (item.data.length) {
                         return (
                             <div
-                                className="history_scroll_item"
+                                className={active === item.id ? 'history_scroll_item active' : 'history_scroll_item'}
                                 key={item.id}
                                 onClick={() => handleClick(item.id)}>
                                 {item.id}
