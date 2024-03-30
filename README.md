@@ -1,3 +1,20 @@
+# React Photo App
+
+This React-based photo app allows users to explore a vast collection of images sourced from Unsplash. It features two main pages: Home and History.
+
+## Features:
+
+- **Home Page:** Displays 20 popular images fetched from the Unsplash API. Users can search for specific images using the search bar.
+  
+- **Infinite Scroll:** Provides seamless browsing by dynamically loading more images as the user scrolls down.
+
+- **Data Caching:** Optimizes performance by caching search results locally with LocalStorage, minimizing API requests for repeated searches.
+
+- **Modal Component:** Enhances user experience by displaying detailed views of images in a modal when clicked.
+
+- **History Page:** Shows a history of previously searched images, allowing users to revisit past searches.
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
